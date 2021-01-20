@@ -5,31 +5,26 @@ class Table extends React.Component {
     super()
     this.state = {
       cryptoData: [
-        {"Currency": "xrp", "Price": "7,200.03", "24h": "0.0%", "7d": "0.0%", "1 month": "0.0%", "24h Volume": "0", "Mkt Cap": "0"}
+        // {"Currency": "xrp", "Price": "7,200.03", "24h": "0.0%", "7d": "0.0%", "1 month": "0.0%", "24h Volume": "0", "Mkt Cap": "0"},
+        {"Currency": null, "Price": null, "24h": null, "7d": null, "1 month": null, "24h Volume": null, "Mkt Cap": null}
       ]
     }
   }
 
+  componentDidMount() {
+    const readAPI = async () => {      
+      await fetch("https://nameless-sea-84524.herokuapp.com/crypto_api").then(res => res.json()).then(cryptos => {
+        console.log(cryptos) // api array  
+        cryptos.forEach(crypto => {
+          this.setState({cryptoData: [...this.state.cryptoData, crypto]}) 
+        })
+      })
+      console.log(this.state.cryptoData.length)
+    } 
+    readAPI()    
+  }
+
   renderTableHeader() {
-    console.log("!!!!!!!!!!!!")
-
-    // const prepData = async () => {
-    //   let cryptos = await fetch("https://nameless-sea-84524.herokuapp.com/crypto_api").then(res => {return res.json()})
-      
-    //   console.log(cryptos)
-    //   let cryptoData = [...this.state.cryptoData]
-  
-    //   cryptos.forEach(crypto => {
-    //     cryptoData.push(crypto)
-    //   })
-  
-    //   this.setState({cryptoData})
-      
-    // } 
-
-    // prepData()
-    // console.log(this.state.cryptoData.length)
-
     let header = Object.keys(this.state.cryptoData[0])
     return header.map((key, index) => {
       return <th key={index}>{key}</th>
@@ -37,8 +32,6 @@ class Table extends React.Component {
   }
 
   renderTableData() {
-    console.log(this.state.cryptoData[0])
-
     return this.state.cryptoData.map((crypto, index) => {
       const {Currency, Price, "24h":TwentyFourHour, "7d":SevenDay, "1 month":OneMonth, "24h Volume":TwentyFourHourVolume, "Mkt Cap":MktCap} = crypto //destructuring
       return (
@@ -56,7 +49,6 @@ class Table extends React.Component {
   }
 
   render() {
-  
     return (
       <div>
           <h1 id='title'>React Dynamic Table</h1>
