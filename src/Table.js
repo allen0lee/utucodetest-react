@@ -1,4 +1,5 @@
 import React from 'react'
+import './Table.css'
 
 class Table extends React.Component {
   constructor() {
@@ -19,6 +20,7 @@ class Table extends React.Component {
           this.setState({cryptoData: [...this.state.cryptoData, crypto]}) 
         })
       })
+      this.setState({cryptoData: this.state.cryptoData.slice(1)}) // remove first empty line in table, shift() will mutate
       console.log(this.state.cryptoData.length)
     } 
     readAPI()    
@@ -51,7 +53,6 @@ class Table extends React.Component {
   render() {
     return (
       <div>
-          <h1 id='title'>React Dynamic Table</h1>
           <table id='cryptoData'>
             <tbody>
               <tr>{this.renderTableHeader()}</tr>
