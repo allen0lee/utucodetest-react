@@ -6,7 +6,6 @@ class Table extends React.Component {
     super()
     this.state = {
       cryptoData: [
-        // {"Currency": "xrp", "Price": "7,200.03", "24h": "0.0%", "7d": "0.0%", "1 month": "0.0%", "24h Volume": "0", "Mkt Cap": "0"},
         {"Currency": null, "Price": null, "24h": null, "7d": null, "1 month": null, "24h Volume": null, "Mkt Cap": null}
       ]
     }
@@ -14,7 +13,7 @@ class Table extends React.Component {
 
   componentDidMount() {
     const readAPI = async () => {      
-      await fetch("https://nameless-sea-84524.herokuapp.com/crypto_api").then(res => res.json()).then(cryptos => {
+      await fetch("http://localhost:4567/crypto_api").then(res => res.json()).then(cryptos => {
         console.log(cryptos) // api array  
         cryptos.forEach(crypto => {
           this.setState({cryptoData: [...this.state.cryptoData, crypto]}) 
